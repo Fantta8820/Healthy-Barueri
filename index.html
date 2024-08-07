@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Barueri</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <style>
+    @keyframes cube {
+      from {
+        transform: scale(0) rotate(0deg) translate(-50%, -50%);
+        opacity: 1;
+      }
+      to {
+        transform: scale(20) rotate(960deg) translate(-50%, -50%);
+        opacity: 0;
+      }
+    }
+
+    .header{
+        z-index: 1;
+    }
+
+    .background {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      background: #475569;
+      overflow: hidden;     
+      z-index: -1; 
+    }
+    .background li {
+      position: absolute;
+      top: 80vh;
+      left: 45vw;
+      width: 10px;
+      height: 10px;
+      border: solid 1px #3f4c5e;
+      color: transparent;
+      transform-origin: top left;
+      transform: scale(0) rotate(0deg) translate(-50%, -50%);
+      animation: cube 7s ease-in forwards infinite;      
+    }
+    
+    undefined .background li:nth-child(0) {
+      animation-delay: 0s;
+      left: 59vw;
+      top: 17vh;
+      border-color: #4e5d73;
+    }
+
+    .background li:nth-child(1) {
+      animation-delay: 2s;
+      left: 97vw;
+      top: 86vh;
+      border-color: #4e5d73;
+    }
+
+    .background li:nth-child(2) {
+      animation-delay: 4s;
+      left: 2vw;
+      top: 52vh;
+    }
+
+    .background li:nth-child(3) {
+      animation-delay: 6s;
+      left: 72vw;
+      top: 13vh;
+    }
+
+    .background li:nth-child(4) {
+      animation-delay: 8s;
+      left: 18vw;
+      top: 78vh;
+      border-color: #4e5d73;
+    }
+
+    .background li:nth-child(5) {
+      animation-delay: 10s;
+      left: 36vw;
+      top: 41vh;
+    }
+  </style>
+  <body class="w-full min-h-screen bg-slate-600">
+    <header class="header w-full h-20 flex justify-center items-center bg-slate-700">
+      <h1 class="text-3xl font-bold text-white">Health Barueri</h1>
+    </header>
+    <ul class="background">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <main class="w-full">
+      <div class="w-full grid grid-cols-2 place-items-center gap-y-6 mt-20">
+        <div
+          class="transition delay-50 w-96 h-60 backdrop-blur-sm bg-white/30 rounded-xl shadow-md flex flex-col justify-center items-center hover:bg-slate-700"
+        >
+          <h1 class="text-2xl font-bold text-white">Pediatra</h1>
+          <a href="pediatra.html"
+            ><button class="btn btn-neutral w-40 h-4 mt-4">Agendar</button></a
+          >
+        </div>
+        <div
+          class="transition delay-50 w-96 h-60 backdrop-blur-sm bg-white/30 rounded-xl shadow-md flex flex-col justify-center items-center hover:bg-slate-700"
+        >
+          <h1 class="text-2xl font-bold text-white">Ortopedista</h1>
+          <a href="ortopedista.html"
+            ><button class="btn btn-neutral w-40 h-4 mt-4">
+              Ortopedista
+            </button></a
+          >
+        </div>
+        <div
+          class="transition delay-50 w-96 h-60 backdrop-blur-sm bg-white/30 rounded-xl shadow-md flex flex-col justify-center items-center hover:bg-slate-700"
+        >
+          <h1 class="text-2xl font-bold text-white">Dentista</h1>
+          <a href="dentista.html"
+            ><button class="btn btn-neutral w-40 h-4 mt-4">Dentista</button></a
+          >
+        </div>
+        <div
+          class="transition delay-50 w-96 h-60 backdrop-blur-sm bg-white/30 rounded-xl shadow-md flex flex-col justify-center items-center hover:bg-slate-700"
+        >
+          <h1 class="text-2xl font-bold text-white">Oftalmologista</h1>
+          <a href="oftalmologista.html"
+            ><button class="btn btn-neutral w-40 h-4 mt-4">
+              Oftalmologista
+            </button></a
+          >
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
