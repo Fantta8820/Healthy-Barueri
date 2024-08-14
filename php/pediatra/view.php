@@ -149,27 +149,33 @@
         $changeTime = strtotime($data);
         $newData = date('d-m-Y', $changeTime);
 
-        echo '<section  class="w-full h-screen flex flex-col justify-center items-center">';
-        echo "<h1 class='text-center text-white text-5xl font-bold'>Consultas Agendadas</h1>";
-        echo '<table class="grid place-items-center text-white w-full mt-12">';                
-        echo '<tr>';
-        echo '<th class="border-2 px-8 py-4 font-bold">Nome</th>';
-        echo '<th class="border-2 px-8 py-4 font-bold">Data</th>';
-        echo '<th class="border-2 px-8 py-4 font-bold">Hora</th>';
-        echo '</tr>';
-        echo '<tr>';        
-        echo "<td class='border-2 px-8 py-4 text-center'>$nome</td>";
-        echo "<td class='border-2 px-8 py-4 text-center'>$newData</td>";
-        echo "<td class='border-2 px-8 py-4 text-center'>$hora</td>";        
-        echo '</tr>';
-        echo '</table>';
-        echo '</section>';
+        $appointments = "Nome: $nome, Data: $data, Hora: $newData\n";
+        file_put_contents('files/appointments.txt', $appointments, FILE_APPEND);
     } else {
         echo "<div class='w-full h-screen flex flex-col justify-center items-center'>";
         echo "<p class='text-xl font-semibold'>Por favor, envie o formulário.<p>";
         echo "</div>";
     }
     ?>
+
+    <section class="w-full h-screen flex flex-col justify-center items-center">
+        <h1 class='text-center text-white text-5xl font-bold'>Consultas Agendadas</h1>
+        <table class="grid place-items-center text-white w-full mt-12">
+            <tr>
+                <th class="border-2 px-8 py-4 font-bold">Informações</th>
+            </tr>
+            <tr>
+                <td class='border-2 px-8 py-4 text-center'><?php
+                if (file_exists('files/appointments.txt')) {
+                    $appointments = file_get_contents('files/appointments.txt');
+                    echo nl2br($appointments);
+                } else {
+                    echo "<p>Não há consultas agendadas.</p>";
+                }
+                ?></td>
+            </tr>
+        </table>
+    </section>
 </body>
 
 </html>

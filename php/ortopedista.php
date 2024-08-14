@@ -146,11 +146,24 @@
         $data = htmlspecialchars($_POST['data']);
         $hora = htmlspecialchars($_POST['hora']);
 
-        echo "<div class='w-full h-screen flex flex-col justify-center items-center text-white'>";
-        echo "<h1 class='text-3xl font-bold'>Obrigado pelo agendamento, $nome!</h1>";
-        echo "<p class='text-xl font-semibold'>Data da consulta: $data</p>";
-        echo "<p class='text-xl font-semibold'>Hora da consulta: $hora</p>";
-        echo "</div>";
+        $changeTime = strtotime($data);
+        $newData = date('d-m-Y', $changeTime);
+
+        echo '<section  class="w-full h-screen flex flex-col justify-center items-center">';
+        echo "<h1 class='text-center text-white text-5xl font-bold'>Consultas Agendadas</h1>";
+        echo '<table class="grid place-items-center text-white w-full mt-12">';                
+        echo '<tr>';
+        echo '<th class="border-2 px-8 py-4 font-bold">Nome</th>';
+        echo '<th class="border-2 px-8 py-4 font-bold">Data</th>';
+        echo '<th class="border-2 px-8 py-4 font-bold">Hora</th>';
+        echo '</tr>';
+        echo '<tr>';        
+        echo "<td class='border-2 px-8 py-4 text-center'>$nome</td>";
+        echo "<td class='border-2 px-8 py-4 text-center'>$newData</td>";
+        echo "<td class='border-2 px-8 py-4 text-center'>$hora</td>";        
+        echo '</tr>';
+        echo '</table>';
+        echo '</section>';
     } else {
         echo "<div class='w-full h-screen flex flex-col justify-center items-center'>";
         echo "<p class='text-xl font-semibold'>Por favor, envie o formulário.<p>";
