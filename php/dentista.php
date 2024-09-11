@@ -78,7 +78,7 @@
         $newData = date('d-m-Y', $changeTime);
 
         $appointments = "$nome, $newData, $hora\n";
-        file_put_contents('appointments/oftalmologista.txt', $appointments, FILE_APPEND);
+        file_put_contents('appointments/dentista.txt', $appointments, FILE_APPEND);
         header('Location: ' . $_SERVER['PHP_SELF']);
       }
     }
@@ -87,8 +87,8 @@
     <section class="w-full flex flex-col items-center">
       <h1 class='text-center text-4xl font-bold pt-24'>Consultas Agendadas</h1>
       <?php
-      if (file_exists('appointments/oftalmologista.txt')) {
-        $appointments = file_get_contents('appointments/oftalmologista.txt');
+      if (file_exists('appointments/dentista.txt')) {
+        $appointments = file_get_contents('appointments/dentista.txt');
 
         $lines = explode("\n", $appointments);
         $tableData = [];
