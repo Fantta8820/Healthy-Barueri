@@ -9,6 +9,37 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
+<?php
+include_once "../main/connection.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    $nome = $_POST['nome'];
+    $especialidade = $_POST['especialidade'];
+    $crm = $_POST['crm'];
+
+    $selectQuery = $connection->prepare("SELECT * FROM medico WHERE crm = :crm");
+    $selectQuery->bindParam("crm", $crm);
+    $selectQuery->execute();
+    if ($selectQuery->rowCount() === 0) {
+        $insertQuery = $connection->prepare("INSERT INTO medico(nome, especialidade, crm) VALUES (:nome, :especialidade, :crm)");
+        $insertQuery->bindParam("nome", $nome);
+        $insertQuery->bindParam("especialidade", $especialidade);
+        $insertQuery->bindParam("crm", $crm);
+        $insertQuery->execute();
+
+        header(header: "Location:" . $_SERVER['PHP_SELF']);
+        exit();
+    } else {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('error').innerHTML = 'Erro! Médico já registrado.';
+            });
+            </script>";
+    }
+
+}
+?>
+
 <body class="w-full min-h-screen bg-gray-100">
     <header class="flex items-center justify-between shadow p-4 bg-gray-300">
         <a href="../main/home.php" class="text-xl font-thin">Health Barueri</a>
@@ -38,12 +69,12 @@
                     </a>
                 </li>
                 <li>
-                    <a class="px-4 hover:text-blue-700 font-thin py-2" href="login.php">
+                    <a class="px-4 hover:text-blue-700 font-thin py-2" href="paciente.php">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 256 256">
                             <path fill="currentColor"
                                 d="M230.93 220a8 8 0 0 1-6.93 4H32a8 8 0 0 1-6.92-12c15.23-26.33 38.7-45.21 66.09-54.16a72 72 0 1 1 73.66 0c27.39 8.95 50.86 27.83 66.09 54.16a8 8 0 0 1 .01 8" />
                         </svg>
-                        Login
+                        Cadastrar
                     </a>
                 </li>
             </ul>
@@ -69,12 +100,12 @@
                 </a>
             </li>
             <li>
-                <a class="px-4 hover:text-blue-700 font-thin py-2" href="login.php">
+                <a class="px-4 hover:text-blue-700 font-thin py-2" href="paciente.php">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 256 256">
                         <path fill="#a6adbb"
                             d="M230.93 220a8 8 0 0 1-6.93 4H32a8 8 0 0 1-6.92-12c15.23-26.33 38.7-45.21 66.09-54.16a72 72 0 1 1 73.66 0c27.39 8.95 50.86 27.83 66.09 54.16a8 8 0 0 1 .01 8" />
                     </svg>
-                    Login
+                    Cadastrar
                 </a>
             </li>
         </ul>
@@ -84,47 +115,32 @@
             <main
                 class="flex flex-col justify-center items-center w-5/6 md:w-2/3 lg:w-2/5 bg-gray-300 rounded-xl shadow-xl mt-12">
                 <form method="POST" class="flex flex-col w-full h-full justify-center items-center gap-4">
-                <h1 class="text-2xl sm:text-3xl text-center font-bold pt-12 text-slate-700 px-8">Entrar com uma conta</h1>
+                    <h1 class="text-2xl sm:text-3xl text-center font-bold pt-12 text-slate-700 px-8">Cadastrar um
+                        Médico</h1>
 
-                    <input type="text" id="primary" name="primario"
-                        class="input input-bordered bg-gray-100 w-4/5 h-16 max-w-4/5" placeholder="Nome ou Email"
-                        required />
+                    <input type="text" id="nome" name="nome"
+                        class="input input-bordered bg-gray-100 w-4/5 h-16 max-w-4/5" placeholder="Nome" required />
 
-                    <input type="password" id="senha" name="senha"
-                        class="input input-bordered bg-gray-100 w-4/5 h-16 max-w-4/5" placeholder="Senha" required />
+                    <select id="especialidade" name="especialidade"
+                        class="input input-bordered bg-gray-100 w-4/5 h-16 max-w-4/5" required>
+                        <option value="pediatra">Pediatra</option>
+                        <option value="ortopedista">Ortopedista</option>
+                        <option value="dentista">Dentista</option>
+                        <option value="oftalmologista">Ofaltmologista</option>
+                    </select>
+
+                    <input type="text" id="crm" name="crm" class="input input-bordered bg-gray-100 w-4/5 h-16 max-w-4/5"
+                        placeholder="CRM" minlength="13" maxlength="13" required />
 
                     <button class="btn bg-gray-100 w-4/5 mt-6 mb-12 border-0" type="submit"
                         name="submit">Enviar</button>
                 </form>
             </main>
             <h1 class="pt-8 text-red-500" id="erro"></h1>
-            <a href="registro.php" class="pt-8 hover:text-blue-700">Não possui uma conta? Crie uma!</a>
+            <a href="paciente.php" class="pt-8 hover:text-blue-700">Deseja cadastrar um paciente?</a>
             <p id="error" class="text-center text-red-700"></p>
         </section>
     </main>
-
-    <?php
-    include_once "../main/connection.php";
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['submit'])) {
-            $primario = $_POST['primario'];
-            $senha = $_POST['senha'];
-
-            $selectQuery = $connection->prepare("SELECT * FROM users WHERE email = :email OR name = :nome");
-            $selectQuery->bindParam("email", $primario);
-            $selectQuery->bindParam("nome", $primario);
-            $selectQuery->execute();
-            if ($selectQuery->rowCount() == 1) {
-                header("Location: home.php");
-            } else {
-                echo "<script>";
-                echo "document.getElementById('error').innerHTML = 'Usuário não registrado!'";
-                echo "</script>";
-            }
-        }
-    }
-    ?>
 </body>
 
 </html>
